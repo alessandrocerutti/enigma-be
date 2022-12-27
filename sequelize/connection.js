@@ -2,7 +2,7 @@ const Sequalize = require('sequelize');
 require('dotenv/config')
 const { applyExtraSetup } = require('./extra-setup');
 
-const sequelize = new Sequalize(
+var sequelize = new Sequalize(
     process.env.DB_DATABASE,
     process.env.DB_USER,
     process.env.DB_PASSWORD,
@@ -13,17 +13,21 @@ const sequelize = new Sequalize(
 );
 
 const modelDefiners = [
+    require('./models/role.model'),
 	require('./models/user.model'),
-    require('./models/role.model')
+    require('./models/hunt.model'),
+    require('./models/ticket.model'),
+    require('./models/huntUser.model'),
+    require('./models/huntTemplate.model')
 	// Add more models here...
 	// require('./models/item'),
 ];
 
 // We define all models according to their files.
-for (const modelDefiner of modelDefiners) {
+for (var modelDefiner of modelDefiners) {
 	modelDefiner(sequelize);
 }
 
-applyExtraSetup(sequelize)
+//applyExtraSetup(sequelize)
 
 module.exports= sequelize;

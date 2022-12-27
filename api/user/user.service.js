@@ -23,7 +23,34 @@ async function getUserById(req, res){
 	}
 }
 
+async function createUser(req, res){
+    console.log("create User");
+
+    var user = req.body;
+
+    user = await models.user.create({
+        "username": user.username,
+        "password":user.password,
+        "role_id":user.role_id
+    })
+
+    console.log(user);
+    res.status(200).json(user);
+
+}
+
+async function deleteUser(req, res){
+    console.log("delete User");
+
+    user = await models.user.destroy({where:{ "id":req.params.id}})
+
+    console.log(user);
+    res.status(200).json(user);
+}
+
 module.exports = {
     getAllUsers,
-    getUserById
+    getUserById,
+    createUser,
+    deleteUser
 }

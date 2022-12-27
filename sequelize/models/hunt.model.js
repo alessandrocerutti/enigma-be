@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 // We export a function that defines the model.
 // This function will automatically receive as parameter the Sequelize connection object.
 module.exports = (sequelize) => {
-	sequelize.define('user', {
+	sequelize.define('hunt', {
 		// The following specification of the 'id' attribute could be omitted
 		// since it is the default.
 		id: {
@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
 			primaryKey: true,
 			type: DataTypes.INTEGER
 		},
-		username: {
+		code: {
 			allowNull: false,
 			type: DataTypes.STRING,
 			unique: true,
@@ -22,28 +22,18 @@ module.exports = (sequelize) => {
 				is: /^\w{3,}$/
 			}
 		},
-		password: {
+		user_id: {
+			type: DataTypes.INTEGER
+		},
+		description: {
 			type: DataTypes.STRING
 		},
-		role_id: {
-			allowNull: false,
-			type: DataTypes.INTEGER,
-			references: {
-				model: 't_role',
-				key: 'id'
-			}
-		}
 	},
 	{
 		underscored: true,
 		timestamps: false,
 		freezeTableName: true,
-		tableName: 't_user',
-		defaultScope: {
-			attributes: { exclude: ['password', 'role_id'] },
-		},
-		scopes: {
-		}
+		tableName: 't_hunt'
 	}
 	);
 };

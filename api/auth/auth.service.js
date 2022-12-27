@@ -19,7 +19,7 @@ async function login(req, res){
     if(user){
         const token = jwt.sign(
             {user:user.id, role:user.role.code},
-            process.env.SECRET_KEY, //TODO da cambiare e mettere in env
+            process.env.SECRET_KEY,
             {
                 algorithm: "HS256",
                 //expiresIn: 

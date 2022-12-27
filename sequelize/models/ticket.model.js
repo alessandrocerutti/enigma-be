@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 // We export a function that defines the model.
 // This function will automatically receive as parameter the Sequelize connection object.
 module.exports = (sequelize) => {
-	sequelize.define('user', {
+	sequelize.define('ticket', {
 		// The following specification of the 'id' attribute could be omitted
 		// since it is the default.
 		id: {
@@ -12,38 +12,32 @@ module.exports = (sequelize) => {
 			primaryKey: true,
 			type: DataTypes.INTEGER
 		},
-		username: {
+		code: {
 			allowNull: false,
 			type: DataTypes.STRING,
-			unique: true,
-			validate: {
-				// We require usernames to have length of at least 3, and
-				// only use letters, numbers and underscores.
-				is: /^\w{3,}$/
-			}
+			unique: true
 		},
-		password: {
+		position: {
 			type: DataTypes.STRING
 		},
-		role_id: {
-			allowNull: false,
-			type: DataTypes.INTEGER,
-			references: {
-				model: 't_role',
-				key: 'id'
-			}
+		street: {
+			type: DataTypes.STRING
+		},
+		note: {
+			type: DataTypes.STRING
+		},
+		user_mod: {
+			type: DataTypes.INTEGER
+		},
+		user_cre: {
+			type: DataTypes.INTEGER
 		}
 	},
 	{
 		underscored: true,
-		timestamps: false,
+		timestamps: true,
 		freezeTableName: true,
-		tableName: 't_user',
-		defaultScope: {
-			attributes: { exclude: ['password', 'role_id'] },
-		},
-		scopes: {
-		}
+		tableName: 't_ticket'
 	}
 	);
 };

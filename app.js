@@ -20,6 +20,12 @@ app.use('/users',jwtAuth.isAuthorized, roleAuth.isAuthorized, userRoute)
 const roleRoute = require('./api/role/role.route')
 app.use('/roles', jwtAuth.isAuthorized,roleAuth.isAuthorized, roleRoute)
 
+const huntRoute = require('./api/hunt/hunt.route')
+app.use('/hunts', jwtAuth.isAuthorized,roleAuth.isAuthorized, huntRoute)
+
+sequelize.sync({force: true });
+//sequelize.sync();
+
 //start listening
 app.listen(3000)
 sequelize
