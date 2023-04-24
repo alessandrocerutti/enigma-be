@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 // We export a function that defines the model.
 // This function will automatically receive as parameter the Sequelize connection object.
 module.exports = (sequelize) => {
-	sequelize.define('ticket', {
+	const caccia = sequelize.define('caccia', {
 		// The following specification of the 'id' attribute could be omitted
 		// since it is the default.
 		id: {
@@ -12,32 +12,21 @@ module.exports = (sequelize) => {
 			primaryKey: true,
 			type: DataTypes.INTEGER
 		},
-		code: {
+		codice: {
 			allowNull: false,
 			type: DataTypes.STRING,
 			unique: true
 		},
-		position: {
+		descrizione: {
 			type: DataTypes.STRING
-		},
-		street: {
-			type: DataTypes.STRING
-		},
-		note: {
-			type: DataTypes.STRING
-		},
-		user_mod: {
-			type: DataTypes.INTEGER
-		},
-		user_cre: {
-			type: DataTypes.INTEGER
 		}
 	},
 	{
 		underscored: true,
 		timestamps: true,
 		freezeTableName: true,
-		tableName: 't_ticket'
+		tableName: 't_caccia'
 	}
 	);
+	return caccia;
 };

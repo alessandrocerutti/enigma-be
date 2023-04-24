@@ -23,6 +23,12 @@ async function getUserById(req, res){
 	}
 }
 
+async function getUsersByHuntId(req, res){
+    console.log("getAllUserByHuntId");
+}
+
+
+
 async function createUser(req, res){
     console.log("create User");
 
@@ -31,7 +37,7 @@ async function createUser(req, res){
     user = await models.user.create({
         "username": user.username,
         "password":user.password,
-        "role_id":user.role_id
+        "roleId":user.roleId
     })
 
     console.log(user);
@@ -51,6 +57,7 @@ async function deleteUser(req, res){
 module.exports = {
     getAllUsers,
     getUserById,
+    getUsersByHuntId,
     createUser,
     deleteUser
 }

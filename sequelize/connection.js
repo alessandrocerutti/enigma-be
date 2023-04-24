@@ -13,12 +13,10 @@ var sequelize = new Sequalize(
 );
 
 const modelDefiners = [
+    require('./models/user.model'),
     require('./models/role.model'),
-	require('./models/user.model'),
-    require('./models/hunt.model'),
-    require('./models/ticket.model'),
-    require('./models/huntUser.model'),
-    require('./models/huntTemplate.model')
+    require('./models/caccia.model'),
+    require('./models/cacciaTemplate.model')
 	// Add more models here...
 	// require('./models/item'),
 ];
@@ -28,6 +26,6 @@ for (var modelDefiner of modelDefiners) {
 	modelDefiner(sequelize);
 }
 
-//applyExtraSetup(sequelize)
+applyExtraSetup(sequelize)
 
 module.exports= sequelize;

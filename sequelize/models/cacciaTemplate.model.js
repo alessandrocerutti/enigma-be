@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 // We export a function that defines the model.
 // This function will automatically receive as parameter the Sequelize connection object.
 module.exports = (sequelize) => {
-	sequelize.define('huntTemplate', {
+	const cacciaTemplate = sequelize.define('cacciaTemplate', {
 		// The following specification of the 'id' attribute could be omitted
 		// since it is the default.
 		id: {
@@ -12,36 +12,28 @@ module.exports = (sequelize) => {
 			primaryKey: true,
 			type: DataTypes.INTEGER
 		},
-		code: {
+		codice: {
 			allowNull: false,
 			type: DataTypes.STRING,
 			unique: true
 		},
-		hunt_id: {
-			allowNull: false,
-			type: DataTypes.INTEGER
-		},
-		description: {
+		descrizione: {
 			type: DataTypes.STRING
 		},
-        sequence: {
+        sequenza: {
             type: DataTypes.INTEGER
         },
-        step_id:{
-            type: DataTypes.INTEGER,
-            allowNull: false
-        }
-        ,
-        step_type:{
+        tipologia:{
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: false
         }
 	},
 	{
 		underscored: true,
 		timestamps: false,
 		freezeTableName: true,
-		tableName: 't_hunt_template'
+		tableName: 't_caccia_template'
 	}
 	);
+	return cacciaTemplate;
 };

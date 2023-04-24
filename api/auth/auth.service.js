@@ -9,16 +9,20 @@ async function login(req, res){
     var {username, password} = req.body; 
 
     const user = await models.user.findOne({
-        include: [models.role],
+        include: [
+            { model: models.role, attribute: ['id','codice']}
+        ],
         where: {
             username: username,
             password: password
           }
         })
-    console.log(JSON.stringify(user))
+
+    console.log("user" + JSON.stringify(user));
+    
     if(user){
         const token = jwt.sign(
-            {user:user.id, role:user.role.code},
+            {user:user.id, role:user.role.codice},
             process.env.SECRET_KEY,
             {
                 algorithm: "HS256",
@@ -28,7 +32,6 @@ async function login(req, res){
     } else {
         return res.status(403).json("Accesso negato")      
     }
-
 }
 
 module.exports = {

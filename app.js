@@ -9,22 +9,24 @@ app.use(express.json())
 //Import Routes
 //is server up
 const serverHealthRoute = require('./api/serverHealthRoute')
-app.use('/', serverHealthRoute)
+app.use('/rest', serverHealthRoute)
 //auth
 const authRoute = require('./api/auth/auth.route')
-app.use('/auth', authRoute)
+app.use('/rest/auth', authRoute)
 //user
 const userRoute = require('./api/user/user.route')
-app.use('/users',jwtAuth.isAuthorized, roleAuth.isAuthorized, userRoute)
+app.use('/rest/user',jwtAuth.isAuthorized, roleAuth.isAuthorized, userRoute)
 //role
 const roleRoute = require('./api/role/role.route')
-app.use('/roles', jwtAuth.isAuthorized,roleAuth.isAuthorized, roleRoute)
+app.use('/rest/ruolo', jwtAuth.isAuthorized,roleAuth.isAuthorized, roleRoute)
 
-const huntRoute = require('./api/hunt/hunt.route')
-app.use('/hunts', jwtAuth.isAuthorized,roleAuth.isAuthorized, huntRoute)
+const cacciaRoute = require('./api/caccia/caccia.route')
+app.use('/rest/caccia', jwtAuth.isAuthorized,roleAuth.isAuthorized, cacciaRoute)
 
-sequelize.sync({force: true });
-//sequelize.sync();
+const cacciaTemplateRoute = require('./api/caccia/cacciaTemplate/cacciaTemplate.route')
+app.use('/rest/caccia/template', jwtAuth.isAuthorized,roleAuth.isAuthorized, cacciaTemplateRoute)
+
+sequelize.sync({force: true});
 
 //start listening
 app.listen(3000)
