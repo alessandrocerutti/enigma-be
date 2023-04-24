@@ -1,3 +1,4 @@
+const { DATE } = require('sequelize');
 const { DataTypes } = require('sequelize');
 
 // We export a function that defines the model.
@@ -26,7 +27,11 @@ module.exports = (sequelize) => {
         tipologia:{
             type: DataTypes.STRING,
             allowNull: false
-        }
+        },
+		isTempoCalcolato:{
+			type: DataTypes.BOOLEAN,
+			default: false
+		}
 	},
 	{
 		underscored: true,

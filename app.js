@@ -26,6 +26,9 @@ app.use('/rest/caccia', jwtAuth.isAuthorized,roleAuth.isAuthorized, cacciaRoute)
 const cacciaTemplateRoute = require('./api/caccia/cacciaTemplate/cacciaTemplate.route')
 app.use('/rest/caccia/template', jwtAuth.isAuthorized,roleAuth.isAuthorized, cacciaTemplateRoute)
 
+const squadraRoute = require('./api/squadra/squadra.route')
+app.use('/rest/squadra', jwtAuth.isAuthorized,roleAuth.isAuthorized, squadraRoute)
+
 sequelize.sync({force: true});
 
 //start listening

@@ -24,6 +24,7 @@ async function saveCacciaTemplate(req, res){
             "descrizione": element.descrizione,
             "sequenza":  element.sequenza,
             "tipologia": element.tipologia,
+            "isTempoCalcolato": element.isTempoCalcolato==null?false:element.isTempoCalcolato,
             "cacciaId": cacciaId
         });
     });

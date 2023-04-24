@@ -16,7 +16,9 @@ const modelDefiners = [
     require('./models/user.model'),
     require('./models/role.model'),
     require('./models/caccia.model'),
-    require('./models/cacciaTemplate.model')
+    require('./models/cacciaTemplate.model'),
+    require('./models/tipoStep.model'),
+    require('./models/squadra.model'),
 	// Add more models here...
 	// require('./models/item'),
 ];
