@@ -29,22 +29,44 @@ async function getCacciaById(req, res){
 async function salvaCaccia(req, res){
     console.log("salvaCaccia");
 
-    var cacciaDaSalvare = req.body;
+    var idCaccia = req.body.id;
+    var cacciaDaSalvare =
+    {
+        "id": idCaccia,
+        "codice": req.body.codice,
+        "descrizione": req.body.descrizione,
+    };
 
-    var caccia = await models.caccia.create({
-        "codice": cacciaDaSalvare.codice,
-        "descrizione":cacciaDaSalvare.descrizione,
-    })
+    models.caccia.upsert(cacciaDaSalvare, idCaccia).then(function([instance, created]){
+        idCaccia = instance.id;
+        
+        res.status(200).json(instance);
+        
+        });
+    }
 
-    console.log(caccia);
-    res.status(200).json(caccia);
 
+async function confermaTemplate(req, res){
+    console.log("confermaTemplate");
+
+    var idCaccia = req.params.id;
+
+    await models.caccia.update(
+        { conferma : true },
+        { where : { id : idCaccia }}
+
+    ).then( function(entity){
+
+        return res.status(200).json("OK");
+    });
+    
+    return res.status(400).json("OK");
+   
 }
 
-
-module.exports = {
-    getAllCaccie,
-    getCacciaById,
-    salvaCaccia
-
-}
+    module.exports = {
+        getAllCaccie,
+        getCacciaById,
+        salvaCaccia,
+        confermaTemplate
+    }

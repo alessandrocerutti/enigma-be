@@ -15,19 +15,19 @@ const authRoute = require('./api/auth/auth.route')
 app.use('/rest/auth', authRoute)
 //user
 const userRoute = require('./api/user/user.route')
-app.use('/rest/user',jwtAuth.isAuthorized, roleAuth.isAuthorized, userRoute)
+app.use('/rest/user',jwtAuth.isAuthorized, roleAuth.isSuperAdmin, userRoute)
 //role
 const roleRoute = require('./api/role/role.route')
-app.use('/rest/ruolo', jwtAuth.isAuthorized,roleAuth.isAuthorized, roleRoute)
+app.use('/rest/ruolo', jwtAuth.isAuthorized,roleAuth.isSuperAdmin, roleRoute)
 
 const cacciaRoute = require('./api/caccia/caccia.route')
-app.use('/rest/caccia', jwtAuth.isAuthorized,roleAuth.isAuthorized, cacciaRoute)
+app.use('/rest/caccia', jwtAuth.isAuthorized,roleAuth.isSuperAdmin, cacciaRoute)
 
 const cacciaTemplateRoute = require('./api/caccia/cacciaTemplate/cacciaTemplate.route')
-app.use('/rest/caccia/template', jwtAuth.isAuthorized,roleAuth.isAuthorized, cacciaTemplateRoute)
+app.use('/rest/caccia/template', jwtAuth.isAuthorized,roleAuth.isAdmin, cacciaTemplateRoute)
 
 const squadraRoute = require('./api/squadra/squadra.route')
-app.use('/rest/squadra', jwtAuth.isAuthorized,roleAuth.isAuthorized, squadraRoute)
+app.use('/rest/squadra', jwtAuth.isAuthorized,roleAuth.isAdmin, squadraRoute)
 
 sequelize.sync({force: true});
 

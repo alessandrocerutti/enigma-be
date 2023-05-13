@@ -3,6 +3,8 @@ const Utility = require('../../utility/utility')
 require('dotenv/config')
 const jwt = require('jsonwebtoken');
 
+const jwtAuth = require('../../authorize/jwt.authorize')
+
 async function login(req, res){
     console.log("login" + JSON.stringify(req.headers))
 
@@ -21,13 +23,8 @@ async function login(req, res){
     console.log("user" + JSON.stringify(user));
     
     if(user){
-        const token = jwt.sign(
-            {user:user.id, role:user.role.codice},
-            process.env.SECRET_KEY,
-            {
-                algorithm: "HS256",
-                //expiresIn: 
-            })    
+        const token = jwtAuth.getToken(user);
+        
         res.json({token})
     } else {
         return res.status(403).json("Accesso negato")      

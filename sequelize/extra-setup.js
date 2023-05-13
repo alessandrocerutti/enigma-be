@@ -1,5 +1,5 @@
 function applyExtraSetup(sequelize) {
-	const { user, role, caccia, cacciaTemplate, tipoStep, squadra} = sequelize.models;
+	const { user, role, caccia, cacciaTemplate, tipoStep, squadra, stepSquadra} = sequelize.models;
 
 //User and Role
 role.hasMany(user);
@@ -12,6 +12,10 @@ cacciaTemplate.belongsTo(caccia, {foreignKey:'cacciaId'});
 //Caccia e Squadra
 caccia.hasMany(squadra,  {foreignKey:'cacciaId'});
 squadra.belongsTo(caccia, {foreignKey:'cacciaId'});
+
+//Squadra e StepSquadra
+squadra.hasMany(stepSquadra, {foreignKey:'squadraId'})
+stepSquadra.belongsTo(squadra, {foreignKey:'squadraId'})
 
 }
 

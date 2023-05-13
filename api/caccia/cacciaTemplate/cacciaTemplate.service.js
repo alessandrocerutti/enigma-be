@@ -12,6 +12,12 @@ async function saveCacciaTemplate(req, res){
     const cacciaId = req.body.id;
     var cacciaTemplateList = req.body.cacciaTemplates;
 
+    const caccia = await models.caccia.findByPk(cacciaId);
+
+    if (caccia!=null && caccia.conferma){
+        return res.status(304).json("Il template della caccia è già stato bloccato, impossibile modificare ulteriormente. Contattare un amministratore");
+    }
+
     await models.cacciaTemplate.destroy({
         where:{
             caccia_id : req.body.id
@@ -29,8 +35,7 @@ async function saveCacciaTemplate(req, res){
         });
     });
 
-    res.status(200).json("ok");
-
+    res.status(200).send();
 }
 
 module.exports = {

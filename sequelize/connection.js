@@ -19,6 +19,7 @@ const modelDefiners = [
     require('./models/cacciaTemplate.model'),
     require('./models/tipoStep.model'),
     require('./models/squadra.model'),
+    require('./models/stepSquadra.model'),
 	// Add more models here...
 	// require('./models/item'),
 ];

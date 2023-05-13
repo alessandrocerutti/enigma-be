@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 // We export a function that defines the model.
 // This function will automatically receive as parameter the Sequelize connection object.
 module.exports = (sequelize) => {
-	const caccia = sequelize.define('caccia', {
+	const stepSquadra = sequelize.define('stepSquadra', {
 		// The following specification of the 'id' attribute could be omitted
 		// since it is the default.
 		id: {
@@ -15,20 +15,37 @@ module.exports = (sequelize) => {
 		codice: {
 			allowNull: false,
 			type: DataTypes.STRING,
+			unique: true
 		},
 		descrizione: {
 			type: DataTypes.STRING
 		},
-		conferma: {
-			type: DataTypes.BOOLEAN
-		}
+        sequenza: {
+            type: DataTypes.INTEGER
+        },
+        tipologia:{
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+		isTempoCalcolato:{
+			type: DataTypes.BOOLEAN,
+			default: false
+		},
+		tsInizio:{
+			type:DataTypes.DATE,
+			default:false
+		},
+		tsFine:{
+			type:DataTypes.DATE,
+			default:false
+		},
 	},
 	{
 		underscored: true,
-		timestamps: true,
+		timestamps: false,
 		freezeTableName: true,
-		tableName: 't_caccia'
+		tableName: 't_step_squadra'
 	}
 	);
-	return caccia;
+	return stepSquadra;
 };

@@ -1,6 +1,7 @@
 module.exports = {
     role: {
         superadmin  :   "SUPERADMIN",
-        admin       :   "ADMIN"
+        admin       :   "ADMIN",
+        user        :   "USER",
     }
 }

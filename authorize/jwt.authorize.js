@@ -1,12 +1,10 @@
 const jwt = require('jsonwebtoken');
 require('dotenv/config')
 
-module.exports.isAuthorized = function(req, res, next) {
+function isAuthorized(req, res, next) {
     const token = req.headers['x-jwt-auth']
 
-    console.log("isAuthorized")
-
-    var payload
+    var payload 
 	try {
 		payload = jwt.verify(token, process.env.SECRET_KEY)
 	} catch (e) {
@@ -16,5 +14,23 @@ module.exports.isAuthorized = function(req, res, next) {
 		}
 		return res.status(400).end()
 	}
+	console.log("jwt.isAuthorized: OK")
     next(payload)
 }
+
+
+function getToken (user){
+	return jwt.sign(
+		{user:user.id, role:user.role.codice},
+		process.env.SECRET_KEY,
+		{
+			algorithm: "HS256",
+			//expiresIn: 
+		})   
+}
+
+
+module.exports = {
+	isAuthorized,
+	getToken
+} 
