@@ -29,7 +29,7 @@ app.use('/rest/caccia/template', jwtAuth.isAuthorized,roleAuth.isAdmin, cacciaTe
 const squadraRoute = require('./api/squadra/squadra.route')
 app.use('/rest/squadra', jwtAuth.isAuthorized,roleAuth.isAdmin, squadraRoute)
 
-sequelize.sync({force: true});
+//sequelize.sync({force: true});
 
 //start listening
 app.listen(3000)

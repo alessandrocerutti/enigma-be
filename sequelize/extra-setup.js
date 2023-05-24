@@ -17,6 +17,10 @@ squadra.belongsTo(caccia, {foreignKey:'cacciaId'});
 squadra.hasMany(stepSquadra, {foreignKey:'squadraId'})
 stepSquadra.belongsTo(squadra, {foreignKey:'squadraId'})
 
+caccia.hasMany(stepSquadra,  {foreignKey:'cacciaId'});
+stepSquadra.belongsTo(caccia, {foreignKey:'cacciaId'});
+
+
 }
 
 module.exports = { applyExtraSetup };
