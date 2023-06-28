@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
 		},
 		codice: {
 			allowNull: false,
-			type: DataTypes.STRING,
+			type: DataTypes.UUID,
 			unique: true
 		},
 		descrizione: {

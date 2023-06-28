@@ -5,6 +5,21 @@ function applyExtraSetup(sequelize) {
 role.hasMany(user);
 user.belongsTo(role);
 
+//User and Caccia
+
+user.belongsToMany(caccia, {
+	through: "t_user_caccia",
+	as: "caccia",
+	foreignKey: "caccia_id",
+  });
+  
+  caccia.belongsToMany(user, {
+	through: "t_user_caccia",
+	as: "users",
+	foreignKey: "user_id",
+  });
+
+
 //Caccia e CacciaTemplate
 caccia.hasMany(cacciaTemplate,  {foreignKey:'cacciaId'});
 cacciaTemplate.belongsTo(caccia, {foreignKey:'cacciaId'});

@@ -5,6 +5,8 @@ const PDFDocument = require('pdfkit');
 const fs = require('fs');
 const qr = require('qr-image');
 
+const UUID = require('uuid');
+
 async function getAllCaccie(req, res){
     console.log("getAllHunts");
 
@@ -84,7 +86,7 @@ async function confermaTemplate(req, res){
             templateList.forEach(async template =>{
 
                 await models.stepSquadra.create({
-                    "codice": template.codice + squadra.codice,
+                    "codice": UUID.v4(),
                     "descrizione": template.descrizione,
                     "sequenza":  template.sequenza,
                     "tipologia": template.tipologia,
@@ -101,6 +103,32 @@ async function confermaTemplate(req, res){
         
     });
    
+}
+
+
+async function startCaccia(req, res){
+    console.log("startCaccia");
+
+    const cacciaId = req.params.id;
+
+    const tsInizio = new Date();
+    //prendo gli step con il numero più basso per tutte le squadre e setto tsPartenza
+
+    //TODO per ora prendo quelli con sequenza 1
+
+
+    await models.stepSquadra.update(
+        {"tsInizio": tsInizio},
+        {
+        where:{
+            "sequenza":1,
+            "cacciaId": cacciaId
+        }
+        
+    }).then(function(){
+        return res.status(200).json();
+    });
+
 }
 
 
@@ -128,7 +156,7 @@ async function getPdfStepByCacciaId(req, res){
     const doc = new PDFDocument();
 
     await recordList.forEach(async record => {
-        const readableValue = record.id + "_"+record.codice; // Sostituisci 'value' con il nome del campo che contiene il valore leggibile
+        const readableValue = record.codice; // Sostituisci 'value' con il nome del campo che contiene il valore leggibile
         console.log("getPdfStepByCacciaId - readableValue: " + readableValue);
 
         const qrCodePath = '.tmp/'+readableValue + '_tmp.png'; // Specifica il percorso e il nome del file temporaneo per l'immagine QRCode
@@ -159,14 +187,11 @@ async function getPdfStepByCacciaId(req, res){
 
 }
 
-
-
-
-
     module.exports = {
         getAllCaccie,
         getCacciaById,
         salvaCaccia,
         confermaTemplate,
-        getPdfStepByCacciaId
+        getPdfStepByCacciaId,
+        startCaccia
     }

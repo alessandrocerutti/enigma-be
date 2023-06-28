@@ -7,5 +7,6 @@ router.get('/:id', service.getCacciaById)
 router.post('/', service.salvaCaccia)
 router.get('/:id/conferma', service.confermaTemplate)
 router.get('/pdf/qrcode/:id', service.getPdfStepByCacciaId)
+router.get('/:id/inizia', service.startCaccia)
 
 module.exports = router;

@@ -27,9 +27,14 @@ const cacciaTemplateRoute = require('./api/caccia/cacciaTemplate/cacciaTemplate.
 app.use('/rest/caccia/template', jwtAuth.isAuthorized,roleAuth.isAdmin, cacciaTemplateRoute)
 
 const squadraRoute = require('./api/squadra/squadra.route')
-app.use('/rest/squadra', jwtAuth.isAuthorized,roleAuth.isAdmin, squadraRoute)
+app.use('/rest/squadra', jwtAuth.isAuthorized,roleAuth.isUser, squadraRoute)
+
+const stepRoute = require('./api/caccia/stepSquadra/step.route')
+app.use('/rest/step', jwtAuth.isAuthorized,roleAuth.isUser, stepRoute)
 
 //sequelize.sync({force: true});
+//sequelize.sync();
+
 
 //start listening
 app.listen(3000)
