@@ -1,6 +1,6 @@
 const Utility = require('../../../utility/utility')
 const { models } = require('../../../sequelize/connection');
-const { Sequelize } = require('sequelize');
+const { Sequelize, where } = require('sequelize');
 
 async function getStepByIdSquadra(req, res){
     console.log("getStepByIdSquadra");
@@ -17,7 +17,7 @@ async function getStepByIdSquadra(req, res){
 }
 
 async function setTimestampAndGetNextStep(req, res){
-
+    console.log("setTimestampAndGetNextStep");
 
     var {idSquadra, qrcode} = req.body;
 
@@ -45,37 +45,75 @@ async function setTimestampAndGetNextStep(req, res){
                 return res.status(400).json("La squadra non coincide con il qrcode");
             }
 
-            await  models.stepSquadra.findOne(
+            await models.stepSquadra.findOne(
                 {
                     where: {
                         "squadra_id":idSquadra,
                         tsInizio: {
-                              [Op.ne]: null
-                            }                       
+                              [Sequelize.Op.ne]: null
+                            },
+                            tsFine: {
+                                [Sequelize.Op.eq]: null
+                              }                      
                       },
                       order: [['sequenza', 'ASC']]
                 }
             ).then(async function(entity){
 
-                console.log("getStepByIdSquadra, step corretto: "+JSON.stringify(entity));
+                console.log("getStepByIdSquadra, step corretto: " + entity.codice);
                 //Concludo lo step
+                console.log("getStepByIdSquadra, qrcode bippato " + qrcode);
+
+                if(entity.codice !== qrcode){
+                    return res.status(400).json("Step errato, quello corretto è :" + entity.codice + " , con codice "+ entity.codice);
+                }
 
                 tsFine = new Date();
 
-                
-                
+                await models.stepSquadra.update(
+                    { tsFine : tsFine },
+                    { where :
+                    {
+                        "codice": qrcode
+                    }}           
+                ).then(async function(entity){
+                    console.log("getStepByIdSquadra,update fatto " + entity);
 
-
+                    await models.stepSquadra.findOne(
+                        {
+                            where: {
+                                "squadra_id":idSquadra,
+                                tsInizio: {
+                                    [Sequelize.Op.eq]: null
+                                  }        
+                              },
+                              order: [['sequenza', 'ASC']]
+                        }
+                    ).then(async function(entity){
+                        console.log("getStepByIdSquadra, next step " + JSON.stringify(entity));
+                        if(entity){
+                            await models.stepSquadra.update(
+                                { tsInizio : new Date() },
+                                { where :
+                                {
+                                    "codice": entity.codice
+                                },
+                                returning: true
+                            },        
+                            ).then(([rowsUpdated, [updatedEntity]]) => {
+                                console.log('Updated entity:', updatedEntity.toJSON());
+                                return res.status(200).json(updatedEntity.toJSON());
+                              })
+                        }
+                    })
+                })
             })
-
-            return res.status(200).json();
         }
 
     })
-
-
-
 }
+
+//TODO get next step!
 
 
 module.exports = {

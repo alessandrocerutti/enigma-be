@@ -13,7 +13,7 @@ async function getSquadraByIdCaccia(req, res){
     if(Utility.isArrayNullOrEmpty(squadraList)){
         res.status(404).send("Squadre non disponibili")
     } else{
-        res.status(200).json(squadraList);
+        res.status(200).json({squadraList});
     }
 }
 
