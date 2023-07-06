@@ -34,9 +34,13 @@ async function createUser(req, res){
 
     var user = req.body;
 
+    var password = user.password;
+
+    passwordEncoded = Utility.hashPassword(password);
+
     user = await models.user.create({
         "username": user.username,
-        "password":user.password,
+        "password":passwordEncoded,
         "roleId":user.roleId
     })
 

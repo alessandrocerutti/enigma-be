@@ -20,6 +20,7 @@ const modelDefiners = [
     require('./models/tipoStep.model'),
     require('./models/squadra.model'),
     require('./models/stepSquadra.model'),
+    require('./models/punteggio.model'),
 	// Add more models here...
 	// require('./models/item'),
 ];

@@ -32,6 +32,9 @@ app.use('/rest/squadra', jwtAuth.isAuthorized,roleAuth.isUser, squadraRoute)
 const stepRoute = require('./api/caccia/stepSquadra/step.route')
 app.use('/rest/step', jwtAuth.isAuthorized,roleAuth.isUser, stepRoute)
 
+const punteggioRoute = require('./api/punteggio/punteggio.route')
+app.use('/rest/punteggio', jwtAuth.isAuthorized,roleAuth.isUser, punteggioRoute)
+
 //sequelize.sync({force: true});
 //sequelize.sync();
 

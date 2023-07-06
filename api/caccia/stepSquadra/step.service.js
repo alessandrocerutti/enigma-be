@@ -2,12 +2,14 @@ const Utility = require('../../../utility/utility')
 const { models } = require('../../../sequelize/connection');
 const { Sequelize, where } = require('sequelize');
 
-async function getStepByIdSquadra(req, res){
-    console.log("getStepByIdSquadra");
+async function getSteps(req, res){
+    console.log("getSteps");
 
     var idSquadra = req.params.idSquadra;
+    var tipologia = req.params.idSquadra;
 
-    const cacciaList = await models.stepSquadra.findAll();
+    const cacciaList = await models.stepSquadra.findAll(
+    );
 	
     if(Utility.isArrayNullOrEmpty(cacciaList)){
         res.status(404).send("La squadra non ha step")
@@ -117,6 +119,6 @@ async function setTimestampAndGetNextStep(req, res){
 
 
 module.exports = {
-    getStepByIdSquadra,
+    getSteps,
     setTimestampAndGetNextStep
 }
