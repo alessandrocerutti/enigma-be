@@ -62,6 +62,10 @@ async function setTimestampAndGetNextStep(req, res){
                 }
             ).then(async function(entity){
 
+                if(!entity){
+                    return res.status(200).json();
+                }
+
                 console.log("getStepByIdSquadra, step corretto: " + entity.codice);
                 //Concludo lo step
                 console.log("getStepByIdSquadra, qrcode bippato " + qrcode);

@@ -87,7 +87,7 @@ async function confermaTemplate(req, res){
 
                 await models.stepSquadra.create({
                     "codice": UUID.v4(),
-                    "descrizione": template.descrizione,
+                    "descrizione": template.descrizione +"_" +squadra.codice,
                     "sequenza":  template.sequenza,
                     "tipologia": template.tipologia,
                     "isTempoCalcolato": template.isTempoCalcolato==null?false:template.isTempoCalcolato,
@@ -144,7 +144,7 @@ async function getPdfStepByCacciaId(req, res){
             where:{
                 "cacciaId" : idCaccia
             }
-            }
+        }
     )
 
     if (Utility.isArrayNullOrEmpty(recordList)) {
@@ -157,7 +157,6 @@ async function getPdfStepByCacciaId(req, res){
 
     await recordList.forEach(async record => {
         const readableValue = record.codice; // Sostituisci 'value' con il nome del campo che contiene il valore leggibile
-        console.log("getPdfStepByCacciaId - readableValue: " + readableValue);
 
         const qrCodePath = '.tmp/'+readableValue + '_tmp.png'; // Specifica il percorso e il nome del file temporaneo per l'immagine QRCode
         
@@ -165,16 +164,16 @@ async function getPdfStepByCacciaId(req, res){
         fs.writeFileSync(qrCodePath, qrCodeImage);
     
         // Aggiungi il QR code al documento PDF
-        doc.image(qrCodeImage, { width: 100, height: 100 });
+        doc.image(qrCodeImage, { width: 150, height: 150 });
     
         // Aggiungi il valore leggibile al documento PDF
-        doc.text(readableValue);
+        doc.text(record.descrizione);
         
         fs.unlinkSync(qrCodePath);
     });
 
     // Invia il documento PDF come risposta
-    res.setHeader('Content-Disposition', 'attachment; filename="qrcode_enigma.pdf"');
+    res.setHeader('Content-Disposition', 'attachment; filename="qrcode_enigma'+ +'.pdf"');
     res.setHeader('Content-Type', 'application/pdf');
     doc.pipe(res);
     doc.end();
