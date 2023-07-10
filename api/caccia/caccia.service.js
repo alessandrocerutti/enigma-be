@@ -6,6 +6,7 @@ const fs = require('fs');
 const qr = require('qr-image');
 
 const UUID = require('uuid');
+const { where } = require('sequelize');
 
 async function getAllCaccie(req, res){
     console.log("getAllHunts");
@@ -137,13 +138,25 @@ async function getPdfStepByCacciaId(req, res){
 
     var idCaccia = req.params.id;
 
+    const { squadraId, tipologia } = req.query;
+
+    whereClause = {};
+
+    whereClause.cacciaId= idCaccia;
+
+    if(squadraId){
+        whereClause.squadraId = squadraId;
+    }
+
+    if(tipologia){
+        whereClause.tipologia = tipologia;
+    }
+
     try {
     // Esegui una query per ottenere il valore dalla tabella
     const recordList = await models.stepSquadra.findAll(
         {
-            where:{
-                "cacciaId" : idCaccia
-            }
+            where: whereClause
         }
     )
 
@@ -164,7 +177,7 @@ async function getPdfStepByCacciaId(req, res){
         fs.writeFileSync(qrCodePath, qrCodeImage);
     
         // Aggiungi il QR code al documento PDF
-        doc.image(qrCodeImage, { width: 150, height: 150 });
+        doc.image(qrCodeImage, { width: 95, height: 95});
     
         // Aggiungi il valore leggibile al documento PDF
         doc.text(record.descrizione);

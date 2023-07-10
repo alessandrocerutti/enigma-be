@@ -10,13 +10,13 @@ user.belongsTo(role);
 user.belongsToMany(caccia, {
 	through: "t_user_caccia",
 	as: "caccia",
-	foreignKey: "caccia_id",
+	foreignKey: "user_id",
   });
   
   caccia.belongsToMany(user, {
 	through: "t_user_caccia",
 	as: "users",
-	foreignKey: "user_id",
+	foreignKey: "caccia_id",
   });
 
 
