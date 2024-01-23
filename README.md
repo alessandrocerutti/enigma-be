@@ -1,2 +1,2 @@
 # enigma-be
-Backend Enigma
+Backend for the treasure hunt "Enigma" written in nodejs.
